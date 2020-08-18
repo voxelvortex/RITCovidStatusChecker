@@ -1,5 +1,6 @@
-from twitter_interpreter import *
+from web_scraper import *
 from serial_comms import *
 
 
-thing()
+state = parse_state(get_state())
+commit(state)
