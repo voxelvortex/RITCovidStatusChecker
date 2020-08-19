@@ -1,7 +1,7 @@
 int redPin = 9;
 int greenPin = 10;
 int bluePin = 11;
-String code = "";\
+String code = "";
 int color = 0;
 
 void setup() {
