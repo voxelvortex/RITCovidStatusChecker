@@ -1,3 +1,11 @@
+"""
+Author: Michael Scalzetti (github.com/voxelvortex)
+web_scraper.py
+
+This file contains helper functions that allow the program
+to pull alert information from RIT's website and digest that
+information into something we can use easily.
+"""
 import requests
 from lxml import html
 import re
@@ -5,7 +13,15 @@ from bs4 import BeautifulSoup as bs
 
 
 def get_state_xml():
-    # depricated get_state that uses xml paths
+    """
+    -----DEPRECATED-----
+    Gets the current alert level at RIT by webscraping an official
+    RIT website using lxml. This approach doesn't work properly and
+    will likely be removed in a commit in the near future
+
+    :return: String representing the current alert level at RIT
+             obtained by web scraping
+    """
     url = "https://www.rit.edu/ready/rit-covid-19-alert-levels"
     headers = {
     'User-Agent':'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36'
@@ -19,7 +35,15 @@ def get_state_xml():
 
 
 def get_state_bsre():
-    # new get_state function that uses beautifulsoup and regex
+    """
+    Gets the current alert level at RIT by webscraping an official
+    RIT website using BeautifulSoup and regex. This approach is
+    a bit convoluted and isn't guaranteed to work when the site is
+    updated, but I have more confidence in this than in the xml approach
+
+    :return: String representing the current alert level at RIT
+             obtained by web scraping
+    """
     codes = {
       "11754": "Green (Low Risk with Vigilance)",
       "11773": "Yellow (Low to Moderate Risk)",
@@ -44,6 +68,12 @@ def get_state_bsre():
 
 
 def parse_state(state):
+    """
+    :param state: String representing the current alert level at RIT
+             obtained by web scraping using a get_state function
+    :return: int ranging from 0 to 3 (inclusive to inclusive)
+              which represents the current alert level at RIT
+    """
     codes = ['Green', 'Yellow', 'Orange', 'Red']
     for i in range(len(codes)):
         if re.search(codes[i], state):
