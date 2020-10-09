@@ -6,7 +6,7 @@ import time
 srl = setup_serial()
 while 1:
     try:
-        state = parse_state(get_state())
+        state = parse_state(get_state_bsre())
         commit(state, srl)
         time.sleep(3600)
     except Exception as e:
